@@ -1,8 +1,8 @@
-#include <iostream>
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <format>
-#include <chrono>
+#include <iostream>
 #include <thread>
 
 using namespace std;
@@ -25,7 +25,8 @@ int start_guess_game()
     bool guessedCorrectly = false;
 
     std::cout << "A number between 1 and 100 has been generated" << std::endl;
-    std::cout << "Can you guess the number? You have " << maxGuesses << " guesses" << "(dev mode - " << secretNumber << ")" << std::endl;
+    std::cout << "Can you guess the number? You have " << maxGuesses << " guesses" << "(dev mode - "
+              << secretNumber << ")" << std::endl;
 
     while (guess != secretNumber)
     {
@@ -47,7 +48,9 @@ int start_guess_game()
 
         if (numberOfGuesses > maxGuesses)
         {
-            printf("You failed to guess the number! It was %d, as result you have lost %d cash :(\n", secretNumber, prize);
+            printf(
+                "You failed to guess the number! It was %d, as result you have lost %d cash :(\n",
+                secretNumber, prize);
             break;
         }
 
@@ -77,7 +80,7 @@ int start_guess_game()
 
     if (guessedCorrectly)
     {
-         return prize;
+        return prize;
     }
     else
     {
