@@ -1,3 +1,4 @@
+#include "games/coin-flip.cpp"
 #include "games/number_guessing.cpp"
 #include <array>
 #include <chrono>
@@ -18,7 +19,8 @@ struct Game
 int main()
 {
     std::unordered_map<std::string, Game> gameFunctionsMap = {
-        {"number-guess", {start_guess_game, "Guess a number to win or lose cash!"}}};
+        {"number-guess", {start_guess_game, "Guess a number to win or lose cash!"}},
+        {"coin-flip", {start_coin_flip_game, "Place a bet and flip a coin!"}}};
 
     int gamesPlayed = 0;
     int cash = 0;
@@ -41,7 +43,6 @@ int main()
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "CPU time used: " << duration.count() << " ms" << std::endl;
 
     // Main loop - Await user input, find the game, play the game, continue
     while (true)

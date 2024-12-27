@@ -46,7 +46,7 @@ int start_guess_game()
             std::cin.clear();
             std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
             std::cout << "Error - You input a letter!\n";
-            continue; // Continue to the next iteration
+            continue;
         }
 
         // Check if guesses exceed max guesses
