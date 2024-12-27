@@ -29,6 +29,10 @@ int start_guess_game()
 
     while (guess != secretNumber)
     {
+        // Clear buffer
+        std::cin.clear();
+
+        // Prompt guess
         std::cout << "Enter your guess: ";
         std::cin >> guess;
         numberOfGuesses += 1;
