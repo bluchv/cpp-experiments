@@ -9,7 +9,7 @@ using namespace std;
 
 void print(string msg, int guesses, int maxGuesses)
 {
-    std::cout << msg << " (" << guesses << "/" << maxGuesses << ")" << std::endl;
+    printf("%s (%d/%d) ", msg.c_str(), guesses, maxGuesses);
 }
 
 int start_guess_game()

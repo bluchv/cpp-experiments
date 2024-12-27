@@ -57,15 +57,15 @@ int main()
 		}
 		else 
 		{
-			auto fn = funcMap[game];
+			auto gameCallbackFunction = funcMap[game];
 			std::cout << "Starting game...\n" << std::endl;
 
-			if (fn)
+			if (gameCallbackFunction)
 			{
-				int cashToAward = fn();
+				int cashToAward = gameCallbackFunction();
 				cash += cashToAward;
 				gamesPlayed += 1;
-				std::cout << "You now have " << cash << " cash left." << " You've played " << gamesPlayed << " games\n" << std::endl;
+				std::cout << "You now have " << cash << " cash left." << " You've played " << gamesPlayed << (gamesPlayed != 1 ? " games" : " game") << std::endl;
 			}
 		}
 	}
