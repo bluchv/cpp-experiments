@@ -21,6 +21,7 @@ int start_guess_game()
     int guess = 0;
     int maxGuesses = 10;
     int numberOfGuesses = 0;
+    int prize = rand() % 50 + 1;
     bool guessedCorrectly = false;
 
     std::cout << "A number between 1 and 100 has been generated" << std::endl;
@@ -63,8 +64,13 @@ int start_guess_game()
         else
         {
             guessedCorrectly = true;
-            std::cout << "Good job! You guessed the number" << std::endl;
+            printf("Good job! You guessed the number. +%d cash\n", prize);
         }
+    }
+
+    if (!guessedCorrectly)
+    {
+         printf("You failed to guess the number :(. -%d cash\n", prize);
     }
 
     std::cin.ignore();
@@ -72,10 +78,10 @@ int start_guess_game()
 
     if (guessedCorrectly)
     {
-         return rand() % 50 + 1;
+         return prize;
     }
     else
     {
-        return -(rand() % 50 + 1);
+        return -prize;
     }
 }
