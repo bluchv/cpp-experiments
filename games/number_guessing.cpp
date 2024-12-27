@@ -36,7 +36,7 @@ int start_guess_game()
         {
             std::cin.clear();
             std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            std::cout << "Get tf out you gotta input a number idiot." << std::endl;
+            std::cout << "Error - You input a letter!" << std::endl;
             break;
         }
 
@@ -48,7 +48,7 @@ int start_guess_game()
 
         if (guess > 100 || guess < 1)
         {
-            std::cout << "You dumbass it has to be between 1-100" << std::endl;
+            std::cout << "Number must be between 1-100!" << std::endl;
             continue;
         }
 

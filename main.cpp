@@ -53,19 +53,19 @@ int main()
 
 		if (!funcMap.contains(game))
 		{
-			std::cout << "You idiot thats not a valid option" << std::endl;
+			std::cout << "Invalid option. Game doesn't exist!\n" << std::endl;
 		}
 		else 
 		{
 			auto fn = funcMap[game];
-			std::cout << "Starting game..." << std::endl;
+			std::cout << "Starting game...\n" << std::endl;
 
 			if (fn)
 			{
 				int cashToAward = fn();
 				cash += cashToAward;
 				gamesPlayed += 1;
-				std::cout << "You now have " << cash << " cash left." << " You've played " << gamesPlayed << " games" << std::endl;
+				std::cout << "You now have " << cash << " cash left." << " You've played " << gamesPlayed << " games\n" << std::endl;
 			}
 		}
 	}
