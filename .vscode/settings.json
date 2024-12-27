@@ -67,7 +67,8 @@
     "codecvt": "cpp",
     "functional": "cpp",
     "list": "cpp",
-    "xhash": "cpp"
+    "xhash": "cpp",
+    "random": "cpp"
   },
 
   "[cpp]": {

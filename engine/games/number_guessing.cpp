@@ -3,63 +3,69 @@
 #include <ctime>
 #include <format>
 #include <iostream>
+#include <random>
 #include <thread>
 
 using namespace std;
 
 void print(string msg, int guesses, int maxGuesses)
 {
-    printf("%s (%d/%d) ", msg.c_str(), guesses, maxGuesses);
+    std::cout << std::format("{} ({}/{}) ", msg, guesses, maxGuesses);
 }
 
 int start_guess_game()
 {
-    srand(static_cast<unsigned int>(time(0)));
+    std::random_device rd;
+    std::mt19937 gen(rd()); // Mersenne Twister random number generator
+    std::uniform_int_distribution<> dis(1, 100);
+    std::uniform_int_distribution<> rewardGeneration(1, 50);
 
     // Random number between 1 and 100
-    int secretNumber = rand() % 100 + 1;
+    int secretNumber = dis(gen);
     int guess = 0;
     int maxGuesses = 10;
     int numberOfGuesses = 0;
-    int prize = rand() % 50 + 1;
+    int prize = rewardGeneration(gen);
     bool guessedCorrectly = false;
 
     std::cout << "A number between 1 and 100 has been generated" << std::endl;
-    std::cout << "Can you guess the number? You have " << maxGuesses << " guesses" << "(dev mode - "
-              << secretNumber << ")" << std::endl;
+    std::cout << "Can you guess the number? You have " << maxGuesses << " guesses"
+              << " (it's def not - " << secretNumber << ")" << std::endl;
 
     while (guess != secretNumber)
     {
-        // Clear buffer
+        // Clear buffer and prompt for input
         std::cin.clear();
-
-        // Prompt guess
         std::cout << "Enter your guess: ";
         std::cin >> guess;
-        numberOfGuesses += 1;
+        numberOfGuesses++;
 
+        // Handle invalid input
         if (std::cin.fail())
         {
             std::cin.clear();
             std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            std::cout << "Error - You input a letter!" << std::endl;
-            break;
+            std::cout << "Error - You input a letter!\n";
+            continue; // Continue to the next iteration
         }
 
+        // Check if guesses exceed max guesses
         if (numberOfGuesses > maxGuesses)
         {
-            printf(
-                "You failed to guess the number! It was %d, as result you have lost %d cash :(\n",
-                secretNumber, prize);
+            std::cout << std::format("You failed to guess the number! It was {}. As a result, you "
+                                     "have lost {} cash :(\n",
+                                     secretNumber, prize);
             break;
         }
 
+        // Validate guess range
         if (guess > 100 || guess < 1)
         {
-            std::cout << "Number must be between 1-100!" << std::endl;
-            continue;
+            std::cout << "Number must be between 1 and 100!\n";
+            continue; // Ask the player to guess again
         }
 
+        // Provide feedback on the guess
         if (guess > secretNumber)
         {
             print("Too high! Try again!", numberOfGuesses, maxGuesses);
@@ -71,7 +77,7 @@ int start_guess_game()
         else
         {
             guessedCorrectly = true;
-            printf("Good job! You guessed the number. +%d cash\n", prize);
+            std::cout << std::format("Good job! You guessed the number. +{} cash\n", prize);
         }
     }
 
