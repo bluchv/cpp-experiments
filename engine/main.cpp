@@ -4,13 +4,21 @@
 #include <map>
 #include <functional>
 #include "games/number_guessing.cpp"
+#include <sstream>
+#include <chrono>
 
 using namespace std;
 
+struct Game {
+    std::function<int()> startGame;
+    std::string description;
+};
+
 int main()
 {
-	std::unordered_map<std::string, std::function<int()>> gameFunctionsMap;
-	gameFunctionsMap["number-guess"] = start_guess_game;
+	std::unordered_map<std::string, Game> gameFunctionsMap = {
+		{"number-guess", {start_guess_game, "Guess a number to win or lose cash!"}}
+	};
 
 	int gamesPlayed = 0;
 	int cash = 0;
@@ -19,39 +27,19 @@ int main()
 
 	string game;
 	string allowedGames = "";
-
-	clock_t start = clock();
+	std::ostringstream oss;
+	auto start = std::chrono::high_resolution_clock::now();
 
 	// Compile a list of games
-	for (auto [validGame, fn] : gameFunctionsMap) {
-		i += 1;
-		if (allowedGames != "")
-		{
-			if (i + 1 >= size)
-			{
-				allowedGames = allowedGames + " " + validGame + ". ";
-			}
-			else
-			{
-				allowedGames = allowedGames + " " + validGame + ",";
-			}
-		}
-		else {
-			if (i + 1 >= size)
-			{
-				allowedGames = validGame + ". ";
-			}
-			else
-			{
-				allowedGames = validGame + ",";
-			}
-		}
+	for (auto it = gameFunctionsMap.begin(); it != gameFunctionsMap.end(); ++it) {
+    if (it != gameFunctionsMap.begin()) oss << ", ";
+    	oss << it->first;
 	}
+	allowedGames = oss.str() + ". ";
 
-	clock_t end = clock();
-
-	double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	std::cout << "CPU time used: " << cpu_time_used << " seconds" << std::endl;
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	std::cout << "CPU time used: " << duration.count() << " ms" << std::endl;
 
 	// Main loop - Await user input, find the game, play the game, continue
 	while (true)
@@ -59,16 +47,21 @@ int main()
 		std::cout << "Choose your game type. Options: " << allowedGames;
 		std::cin >> game;
 
+		if (game == "exit") {
+    		std::cout << "Exiting the program. Thanks for playing!" << std::endl;
+    		break;
+		}
+
 		if (!gameFunctionsMap.contains(game))
 		{
 			std::cout << "Invalid option. Game doesn't exist!\n" << std::endl;
 		}
 		else 
 		{
-			auto gameCallbackFunction = gameFunctionsMap[game];
+			auto gameCallbackFunction = gameFunctionsMap[game].startGame;
 			std::cout << "Starting game...\n" << std::endl;
 
-			if (gameCallbackFunction)
+			if (gameCallbackFunction != nullptr)
 			{
 				int cashToAward = gameCallbackFunction();
 				cash += cashToAward;
