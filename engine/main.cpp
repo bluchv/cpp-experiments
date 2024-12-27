@@ -32,8 +32,8 @@ int main()
 
 	// Compile a list of games
 	for (auto it = gameFunctionsMap.begin(); it != gameFunctionsMap.end(); ++it) {
-    if (it != gameFunctionsMap.begin()) oss << ", ";
-    	oss << it->first;
+    	if (it != gameFunctionsMap.begin()) oss << ", ";
+    		oss << it->first;
 	}
 	allowedGames = oss.str() + ". ";
 
