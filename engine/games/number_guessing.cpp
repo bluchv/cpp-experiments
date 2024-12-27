@@ -41,9 +41,9 @@ int start_guess_game()
             break;
         }
 
-        if (numberOfGuesses > maxGuesses + 1)
+        if (numberOfGuesses > maxGuesses)
         {
-            std::cout << "Too many guesses! The number was " << secretNumber << std::endl;
+            printf("You failed to guess the number! It was %d, as result you have lost %d cash :(\n", secretNumber, prize);
             break;
         }
 
@@ -66,11 +66,6 @@ int start_guess_game()
             guessedCorrectly = true;
             printf("Good job! You guessed the number. +%d cash\n", prize);
         }
-    }
-
-    if (!guessedCorrectly)
-    {
-         printf("You failed to guess the number :(. -%d cash\n", prize);
     }
 
     std::cin.ignore();
